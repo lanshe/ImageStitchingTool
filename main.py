@@ -50,28 +50,52 @@ def generate_image():
         image_paths.append(filepath)
     
     # 加载图片，找到最小宽度
-    images = [Image.open(path).convert('RGB') for path in image_paths]
+    images = [Image.open(path) for path in image_paths]
+    # 保存原始图片的模式
+    img_modes = [img.mode for img in images]
+    
+    # 确保所有图片使用相同的模式进行处理
+    # 优先使用RGBA模式保留透明度，如果都是RGB则使用RGB
+    if any(mode == 'RGBA' for mode in img_modes):
+        process_mode = 'RGBA'
+        save_format = 'PNG'
+        # 转换所有图片到RGBA
+        images = [img.convert('RGBA') for img in images]
+    else:
+        process_mode = 'RGB'
+        save_format = 'JPEG'
+        # 转换所有图片到RGB
+        images = [img.convert('RGB') for img in images]
+    
     widths, heights = zip(*(i.size for i in images))
     min_width = min(widths)
     
-    # 缩放所有图片到最小宽度，保持比例
-    resized_images = [img.resize((min_width, int(height * min_width / width))) 
-                    for img, width, height in zip(images, widths, heights)]
+    # 缩放所有图片到最小宽度，保持比例，使用高质量重采样
+    resized_images = [img.resize((min_width, int(height * min_width / width)), 
+                                 Image.LANCZOS) 
+                     for img, width, height in zip(images, widths, heights)]
     
     # 计算总高度
     total_height = sum(img.size[1] for img in resized_images)
     
     # 创建新图像，垂直拼接
-    new_image = Image.new('RGB', (min_width, total_height))
+    new_image = Image.new(process_mode, (min_width, total_height))
     y_offset = 0
     for img in resized_images:
         new_image.paste(img, (0, y_offset))
         y_offset += img.size[1]
     
     # 保存并返回下载
-    output_path = os.path.join(app.config['UPLOAD_FOLDER'], 'output.jpg')
-    new_image.save(output_path)
-    return send_file(output_path, as_attachment=True)
+    if save_format == 'JPEG':
+        output_path = os.path.join(app.config['UPLOAD_FOLDER'], 'output.jpg')
+        new_image.save(output_path, format='JPEG', quality=95, subsampling=0)
+        mimetype = 'image/jpeg'
+    else:
+        output_path = os.path.join(app.config['UPLOAD_FOLDER'], 'output.png')
+        new_image.save(output_path, format='PNG')
+        mimetype = 'image/png'
+    
+    return send_file(output_path, as_attachment=True, mimetype=mimetype)
 
 if __name__ == '__main__':
     app.run(debug=True) 

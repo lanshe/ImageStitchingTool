@@ -126,13 +126,16 @@ function generate() {
         if (!response.ok) {
             throw new Error('生成失败');
         }
-        return response.blob();
+        // 检查响应的Content-Type来确定文件类型
+        const contentType = response.headers.get('Content-Type');
+        const fileExt = contentType.includes('png') ? 'png' : 'jpg';
+        return response.blob().then(blob => ({ blob, fileExt }));
     })
-    .then(blob => {
+    .then(({ blob, fileExt }) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'combined_image.jpg';
+        a.download = `combined_image.${fileExt}`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
