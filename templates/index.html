@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片拼接工具</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>图片拼接工具</h1>
+        <div id="drop-area">
+            拖拽图片到此处或点击上传
+            <input type="file" id="fileInput" multiple style="display: none;">
+        </div>
+        <ul id="image-list" class="image-list"></ul>
+        <button id="generate-btn" onclick="generate()">生成长图</button>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html> 
