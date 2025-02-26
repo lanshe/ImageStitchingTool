@@ -32,8 +32,8 @@ Image Stitching Tool 是一个基于 Flask 的轻量级 Web 工具，用于快�
 
 1. 克隆仓库到本地
    ```bash
-   git clone https://github.com/yourusername/pinjiephoto.git
-   cd pinjiephoto
+   git clone git@github.com:lanshe/ImageStitchingTool.git
+   cd ImageStitchingTool
    ```
 
 2. 创建并激活虚拟环境
@@ -71,12 +71,11 @@ Image Stitching Tool 是一个基于 Flask 的轻量级 Web 工具，用于快�
 
 ### Project Overview
 
-PinjiePhoto is a lightweight Flask-based web tool for quickly creating long vertical images, perfect for stitching together screenshots or photos. Through a simple drag-and-drop interface, users can easily upload images, adjust their order, and generate a combined image with one click.
+Image Stitching Tool is a lightweight Flask-based web tool for quickly creating long vertical images, perfect for stitching together screenshots or photos. Through a simple drag-and-drop interface, users can easily upload images, adjust their order, and generate a combined image with one click.
 
 ### Key Features
 
 - **Intuitive Drag & Drop Upload**: Support for multiple file uploads via drag and drop or file selection
-- **Flexible Image Ordering**: Easily arrange images in any order through drag and drop
 - **Automatic Image Processing**: Images are automatically resized to a consistent width while maintaining aspect ratio
 - **One-Click Generation**: Instantly generate and download the combined image
 
@@ -90,8 +89,8 @@ PinjiePhoto is a lightweight Flask-based web tool for quickly creating long vert
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/yourusername/pinjiephoto.git
-   cd pinjiephoto
+   git clone git@github.com:lanshe/ImageStitchingTool.git
+   cd ImageStitchingTool
    ```
 
 2. Create and activate a virtual environment
@@ -133,7 +132,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ```
 MIT License
 
-Copyright (c) 2025 PinjiePhoto Contributors
+Copyright (c) 2025 Image Stitching Tool Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
